@@ -1,0 +1,29 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Starpad
+    network: matic
+    source:
+      address: "0xB4A0137CcA5fEEAa4122d26b13C6cDfFFB10Ff88"
+      abi: Starpad
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ImplementationUpdated
+        - OwnershipTransferred
+        - TokenCreated
+      abis:
+        - name: Starpad
+          file: Starpad/abis/Starpad.json
+      eventHandlers:
+        - event: ImplementationUpdated(address)
+          handler: handleImplementationUpdated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TokenCreated(address,string,string,uint256)
+          handler: handleTokenCreated
+      file: Starpad/Starpad.wasm
